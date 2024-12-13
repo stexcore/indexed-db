@@ -1,0 +1,27 @@
+{
+  "name": "@stexcore/indexed-db",
+  "version": "1.0.1",
+  "description": "Manage the IndexedDB Web API, through a simple and easy interface.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "engines": {
+    "javascript": ">=2016"
+  },
+  "keywords": [
+    "JAVASCRIPT",
+    "INDEXEDDB",
+    "TYPESCRIPT",
+    "DATABASE",
+    "STORAGE",
+    "DATA",
+    "TABLES",
+    "QUERYS"
+  ],
+  "author": "stexcore",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
