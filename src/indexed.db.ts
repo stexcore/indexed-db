@@ -7,6 +7,7 @@
 
 import { IFieldType } from "./types/field.type";
 import { IFieldTypeToValueType } from "./types/field.type.value.type";
+import { ISearchOptionsFind } from "./types/search.options";
 import { IStructField } from "./types/struct.field";
 import { IStructTable } from "./types/struct.table";
 import { ITable } from "./types/table";
@@ -349,8 +350,8 @@ export class IndexedDB<T extends { [key: string]: IStructTable<{ [key: string]: 
                         const table: ITable<IValue, IValueInsert> = {
                             table_name: String(name),
 
-                            // find all reconds
-                            findAll: (searchOptions) => {
+                            // find all records
+                            findAll(searchOptions) {
                                 return new Promise((resolve, reject) => {
                                     const transaction = db.transaction(name, "readonly");
                                     const storage = transaction.objectStore(name);
@@ -383,13 +384,45 @@ export class IndexedDB<T extends { [key: string]: IStructTable<{ [key: string]: 
                                         });
 
                                         // trim records based on limit
-                                        resolve(filteredRecords.slice(searchOptions?.offset || 0, (searchOptions?.offset || 0) + (searchOptions?.limit ?? filteredRecords.length)));
+                                        const slicedRecords = filteredRecords.slice(
+                                            searchOptions?.offset || 0, 
+                                            (searchOptions?.offset || 0) + (searchOptions?.limit ?? filteredRecords.length)
+                                        );
+
+                                        // select attributes of result
+                                        const records = (searchOptions?.attributes && searchOptions.attributes.length) ? (
+                                            slicedRecords.map((record) => {
+                                                const item: any = { };
+
+                                                for(const attrItem of searchOptions.attributes!) {
+                                                    if(attrItem) {
+                                                        item[attrItem] = record[attrItem];
+                                                    }
+                                                }
+
+                                                return item;
+                                            })
+                                        ) : slicedRecords;
+
+                                        resolve(records);
                                     }
 
                                     requestGetAll.onerror = () => {
                                         reject(requestGetAll.error);
                                     }
                                 });
+                            },
+
+                            // find one record
+                            findOne<T2 extends IValue>(searchOptions: ISearchOptionsFind<IValue>) {
+                                return (
+                                    table.findAll<T2>({
+                                        ...searchOptions,
+                                        limit: 1,
+                                        offset: 0
+                                    })
+                                        .then((record) => ((record[0] || null) as any))
+                                );
                             },
 
                             // insert recods

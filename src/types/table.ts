@@ -5,7 +5,7 @@
     Copyright 2024
 ***************************************************************/
 
-import { ISearchOptions } from "./search.options";
+import { ISearchOptions, ISearchOptionsFind, ISearchOptionsFindAll } from "./search.options";
 
 /**
  * interface to manage a table indexedDB
@@ -27,11 +27,18 @@ export interface ITable<
     readonly table_name: string;
 
     /**
+     * Find a record based on the search options
+     * @param searchOptions Options to search
+     * @returns Records found
+     */
+    findOne<T2 extends T = T>(searchOptions?: ISearchOptionsFind<T>): Promise<T2 | null>;
+
+    /**
      * Find all records based on the search options
      * @param searchOptions Options to search
      * @returns Records found
      */
-    findAll(searchOptions?: ISearchOptions<T>): Promise<T[]>;
+    findAll<T2 extends T = T>(searchOptions?: ISearchOptionsFindAll<T>): Promise<T2[]>;
 
     /**
      * Delete all records based on the search options

@@ -107,9 +107,12 @@ Here’s a detailed example of how to use the Data Management Library:
 
     - **Find All Records**:
       ```javascript
+      // get table
       database.getTable("users")
-        .then((user) => {
-          user.findAll()
+        .then((userTable) => {
+
+          // get all records
+          userTable.findAll()
             .then((records) => {
               console.log("Searched records:", records);
             })
@@ -124,8 +127,11 @@ Here’s a detailed example of how to use the Data Management Library:
 
     - **Find Records with Conditions**:
       ```javascript
+      // get table
       database.getTable("users")
         .then((user) => {
+
+          // get all records based on the conditions
           user.findAll({
             where: {
               username: "stexcore"
@@ -133,12 +139,12 @@ Here’s a detailed example of how to use the Data Management Library:
             limit: 1,
             offset: 0
           })
-          .then((records) => {
-            console.log("Searched records:", records);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+            .then((records) => {
+              console.log("Searched records:", records);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         })
         .catch((err) => {
           console.error(err);
@@ -150,18 +156,21 @@ Here’s a detailed example of how to use the Data Management Library:
 
     - **Insert a Single Record**:
       ```javascript
+      // get table
       database.getTable("users")
         .then((user) => {
+
+          // insert records into table
           user.insert({
             username: "stexcore",
             phone: null
           })
-          .then((records) => {
-            console.log("Records inserted:", records);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+            .then((records) => {
+              console.log("Records inserted:", records);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         })
         .catch((err) => {
           console.error(err);
@@ -170,8 +179,11 @@ Here’s a detailed example of how to use the Data Management Library:
 
     - **Insert Multiple Records**:
       ```javascript
+      // get table
       database.getTable("users")
         .then((user) => {
+
+          // insert many records into table
           user.insert([
             {
               username: "stexcore",
@@ -182,12 +194,12 @@ Here’s a detailed example of how to use the Data Management Library:
               phone: "+58 412 0000 000"
             }
           ])
-          .then((records) => {
-            console.log("Records inserted:", records);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+            .then((records) => {
+              console.log("Records inserted:", records);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         })
         .catch((err) => {
           console.error(err);
@@ -198,8 +210,11 @@ Here’s a detailed example of how to use the Data Management Library:
     You can update existing records based on specific conditions.
 
     ```javascript
+    // get table
     database.getTable("users")
       .then((user) => {
+
+        // update records base on the conditions
         user.update({
           phone: null
         }, {
@@ -207,12 +222,12 @@ Here’s a detailed example of how to use the Data Management Library:
             username: "stexcore"
           }
         })
-        .then(({ n_affected }) => {
-          console.log("Records updated:", n_affected);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+          .then(({ n_affected }) => {
+            console.log("Records updated:", n_affected);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
       .catch((err) => {
         console.error(err);
@@ -223,19 +238,22 @@ Here’s a detailed example of how to use the Data Management Library:
     You can delete records that match certain criteria.
 
     ```javascript
+    // get table
     database.getTable("users")
       .then((user) => {
+
+        // delete records base on the conditions
         user.delete({
           where: {
             username: "stexcore"
           }
         })
-        .then(({ n_affected }) => {
-          console.log("Records deleted:", n_affected);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+          .then(({ n_affected }) => {
+            console.log("Records deleted:", n_affected);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
       .catch((err) => {
         console.error(err);
@@ -251,7 +269,7 @@ Contributions are welcome! If you have suggestions for improvements or new featu
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/stexcore/indexed-db/blob/main/LICENCE) file for details.
 
 ## Acknowledgments
 
